@@ -1,8 +1,8 @@
-import { classNames } from "@/utils/generics";
 import { Dialog, Transition } from "@headlessui/react";
 import { Cog6ToothIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Fragment } from "react";
+import { classNames } from "@/utils/generics";
 
 export default function MobileSidebar({
   sidebarOpen,

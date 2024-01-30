@@ -1,15 +1,28 @@
 import { useEffect, useState } from "react";
-import { FolderIcon, HomeIcon, UsersIcon } from "@heroicons/react/24/outline";
-
+import {
+  Squares2X2Icon,
+  TagIcon,
+  ClipboardDocumentListIcon,
+} from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
 import MobileSidebar from "@/components/Mobile/Sidebar";
 import DesktopSidebar from "@/components/Desktop/Sidebar";
 import Header from "@/components/Header";
-import { useRouter } from "next/router";
 
 let sidebarNavigation = [
-  { name: "Dashboard", href: "dashboard", icon: HomeIcon, current: true },
-  { name: "Products", href: "products", icon: UsersIcon, current: false },
-  { name: "Invoices", href: "invoices", icon: FolderIcon, current: false },
+  {
+    name: "Dashboard",
+    href: "dashboard",
+    icon: Squares2X2Icon,
+    current: true,
+  },
+  { name: "Products", href: "products", icon: TagIcon, current: false },
+  {
+    name: "Invoices",
+    href: "invoices",
+    icon: ClipboardDocumentListIcon,
+    current: false,
+  },
 ];
 
 const userNavigation = [
@@ -30,8 +43,6 @@ export default function AppLayout({ children }) {
     setNavigation(updatedNavigation);
   }, [router]);
 
-  console.log(navigation.filter((item) => router.pathname.includes(item.href)));
-
   return (
     <>
       <div>
@@ -49,7 +60,7 @@ export default function AppLayout({ children }) {
             setSidebarOpen={setSidebarOpen}
           />
 
-          <main className="py-10">
+          <main className="py-4">
             <div className="px-4 sm:px-6 lg:px-8">{children}</div>
           </main>
         </div>
