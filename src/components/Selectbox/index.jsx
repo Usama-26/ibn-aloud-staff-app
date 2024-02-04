@@ -45,11 +45,13 @@ export default function Selectbox({ defaultItem, items, onSelect }) {
             {filteredItems.map((item) => (
               <Combobox.Option
                 key={item.id}
+                disabled={item?.total_qty <= 0}
                 value={item}
                 className={({ active }) =>
                   classNames(
                     "relative cursor-default select-none py-2 pl-8 pr-4",
-                    active ? "bg-indigo-600 text-white" : "text-gray-900"
+                    active ? "bg-indigo-600 text-white" : "text-gray-900",
+                    item?.total_qty <= 0 ? "bg-red-100 text-red-600" : ""
                   )
                 }
               >

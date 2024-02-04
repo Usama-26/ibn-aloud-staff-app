@@ -15,6 +15,9 @@ function reducer(state, action) {
     case "insert/product":
       return { ...state, newProduct: action.payload, isLoading: false };
 
+    case "insert/invoice":
+      return { ...state, newInvoice: action.payload, isLoading: false };
+
     case "get/invoices":
       return { ...state, invoices: action.payload, isLoading: false };
 
@@ -31,6 +34,7 @@ const initialState = {
   allCompanies: [],
   allSuppliers: [],
   newProduct: null,
+  newInvoice: null,
   invoices: [],
   isLoading: false,
   error: "",
@@ -47,6 +51,7 @@ function GeneralProvider({ children }) {
       allSuppliers,
       allCompanies,
       newProduct,
+      newInvoice,
       invoices,
       isLoading,
       error,
@@ -121,6 +126,21 @@ function GeneralProvider({ children }) {
     }
   };
 
+  const addInvoice = async (queryObj) => {
+    dispatch({ type: "loading" });
+
+    try {
+      const response = await axios.post(backendUrl, queryObj);
+      console.log(response);
+      dispatch({ type: "insert/invoice", payload: response.data });
+      return response;
+    } catch (error) {
+      dispatch({ type: "rejected", payload: error.message });
+      console.log(error);
+      return error;
+    }
+  };
+
   return (
     <GeneralContext.Provider
       value={{
@@ -128,6 +148,7 @@ function GeneralProvider({ children }) {
         allSuppliers,
         allCompanies,
         newProduct,
+        newInvoice,
         invoices,
         isLoading,
         error,
@@ -136,6 +157,7 @@ function GeneralProvider({ children }) {
         fetchAllCompanies,
         fetchInvoices,
         addProduct,
+        addInvoice,
       }}
     >
       {children}
@@ -151,6 +173,7 @@ function useProduct() {
     allSuppliers,
     isLoading,
     newProduct,
+    newInvoice,
     invoices,
     error,
     fetchAllProducts,
@@ -158,6 +181,7 @@ function useProduct() {
     fetchAllCompanies,
     fetchInvoices,
     addProduct,
+    addInvoice,
   } = context;
 
   return {
@@ -165,6 +189,7 @@ function useProduct() {
     allCompanies,
     allSuppliers,
     newProduct,
+    newInvoice,
     isLoading,
     invoices,
     error,
@@ -173,6 +198,7 @@ function useProduct() {
     fetchAllCompanies,
     fetchInvoices,
     addProduct,
+    addInvoice,
   };
 }
 
